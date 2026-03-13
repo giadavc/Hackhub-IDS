@@ -2,8 +2,10 @@ package org.example.hackhubids.Service;
 
 import org.example.hackhubids.Domain.Team;
 import org.example.hackhubids.Domain.TeamMembership;
+import org.example.hackhubids.Domain.User;
 import org.example.hackhubids.Repository.TeamMembershipRepository;
 import org.example.hackhubids.Repository.TeamRepository;
+import org.example.hackhubids.Repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
