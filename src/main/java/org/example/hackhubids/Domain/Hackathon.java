@@ -5,6 +5,12 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Hackathon {
 
     @Id
@@ -23,6 +29,7 @@ public class Hackathon {
     private String location;
     private double prizeAmount;
     private int maxTeamSize;
+    private Long winnerTeamId;
 
     /**
      * Numero massimo di team iscrivibili all'hackathon.

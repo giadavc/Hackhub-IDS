@@ -4,6 +4,7 @@ import org.example.hackhubids.Domain.Hackathon;
 import org.example.hackhubids.Domain.HackathonStatus;
 import org.example.hackhubids.Repository.HackathonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 

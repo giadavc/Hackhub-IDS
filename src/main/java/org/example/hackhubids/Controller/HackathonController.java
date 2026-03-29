@@ -1,9 +1,11 @@
 package org.example.hackhubids.Controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.example.hackhubids.Domain.Hackathon;
 import org.example.hackhubids.Service.HackathonService;
+import org.example.hackhubids.Service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -51,7 +54,7 @@ public class HackathonController {
     public ResponseEntity<Void> proclaimWinnerAndPay(@PathVariable Long id,
                                                      @RequestParam Long teamId) {
         hackathonService.proclaimWinner(id);
-        paymentService.payWinner(id, teamId);
+        paymentService.payWinner(id);
         return ResponseEntity.ok().build();
     }
 
