@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.example.hackhubids.Domain.Hackathon;
+import org.example.hackhubids.Service.HackathonRegistrationService;
 import org.example.hackhubids.Service.HackathonService;
 import org.example.hackhubids.Service.PaymentService;
 import org.springframework.http.ResponseEntity;

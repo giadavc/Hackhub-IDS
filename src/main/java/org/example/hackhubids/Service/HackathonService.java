@@ -2,7 +2,10 @@ package org.example.hackhubids.Service;
 
 import org.example.hackhubids.Domain.Hackathon;
 import org.example.hackhubids.Domain.HackathonStatus;
+import org.example.hackhubids.Domain.StaffMember;
+import org.example.hackhubids.Domain.StaffRole;
 import org.example.hackhubids.Repository.HackathonRepository;
+import org.example.hackhubids.Repository.StaffMemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
