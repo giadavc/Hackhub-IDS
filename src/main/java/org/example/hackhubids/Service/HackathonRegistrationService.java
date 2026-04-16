@@ -16,10 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.EnumSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class HackathonRegistrationService {
+
+    private static final Set<HackathonStatus> ACTIVE_STATUSES = EnumSet.of(
+        HackathonStatus.IN_REGISTRATION,
+        HackathonStatus.RUNNING,
+        HackathonStatus.IN_EVALUATION
+);
 
     private final HackathonRepository hackathonRepository;
     private final TeamRepository teamRepository;
@@ -35,8 +43,8 @@ public class HackathonRegistrationService {
         validateTeamSize(hackathon, team);
         validateMaxTeams(hackathon);
 
-        if (registrationRepository.existsByHackathonAndTeam(hackathon, team)) {
-            throw new IllegalStateException("Team already registered for this hackathon");
+        if (registrationRepository.existsByTeamAndHackathon_StatusIn(team, ACTIVE_STATUSES)) {
+            throw new IllegalStateException("Team already registered for an active hackathon");
         }
 
         HackathonRegistration registration = HackathonRegistration.builder()
