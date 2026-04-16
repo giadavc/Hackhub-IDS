@@ -3,6 +3,7 @@ package org.example.hackhubids.Service;
 import org.example.hackhubids.Domain.Team;
 import org.example.hackhubids.Domain.TeamMembership;
 import org.example.hackhubids.Domain.User;
+import org.example.hackhubids.Repository.StaffMemberRepository;
 import org.example.hackhubids.Repository.TeamMembershipRepository;
 import org.example.hackhubids.Repository.TeamRepository;
 import org.example.hackhubids.Repository.UserRepository;
@@ -20,6 +21,7 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final TeamMembershipRepository teamMembershipRepository;
+    private final StaffMemberRepository staffMemberRepository;
 
     @Transactional
     public Team createTeam(String teamName, Long userId) {
@@ -28,6 +30,11 @@ public class TeamService {
         teamMembershipRepository.findByUser(user).ifPresent(m -> {
             throw new IllegalStateException("User already belongs to a team");
         });
+
+        // Controlla se l'utente e' parte dello staff
+        if (staffMemberRepository.findByUser(user).isPresent()) {
+            throw new IllegalStateException("Staff members cannot create or join teams");
+        }
 
         Team team = Team.builder()
                 .name(teamName)
