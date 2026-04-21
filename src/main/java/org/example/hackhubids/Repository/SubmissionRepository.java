@@ -2,6 +2,7 @@ package org.example.hackhubids.Repository;
 
 
 import org.example.hackhubids.Domain.Hackathon;
+import org.example.hackhubids.Domain.Submission;
 import org.example.hackhubids.Domain.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 
