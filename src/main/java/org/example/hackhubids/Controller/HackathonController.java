@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.example.hackhubids.Domain.Hackathon;
+import org.example.hackhubids.Domain.HackathonStaffAssignment;
+import org.example.hackhubids.Domain.Submission;
 import org.example.hackhubids.Service.HackathonRegistrationService;
 import org.example.hackhubids.Service.HackathonService;
 import org.example.hackhubids.Service.PaymentService;
@@ -34,6 +36,11 @@ public class HackathonController {
         return ResponseEntity.ok(hackathonService.listPublicHackathons());
     }
 
+    @GetMapping("/{id}/submissions")
+    public ResponseEntity<List<Submission>> listSubmissions(@PathVariable Long id, @RequestParam Long staffMemberId) {
+        return ResponseEntity.ok(hackathonService.listSubmissions(id, staffMemberId));
+    }
+
     @PostMapping
     public ResponseEntity<Hackathon> createHackathon(@Valid @RequestBody CreateHackathonRequest request) {
         Hackathon hackathon = Hackathon.builder()
@@ -48,6 +55,14 @@ public class HackathonController {
                 .maxTeams(request.getMaxTeams())
                 .build();
         return ResponseEntity.ok(hackathonService.createHackathon(hackathon, request.getOrganizerStaffId()));
+    }
+
+    @PostMapping("/{id}/assign-mentor")
+    public ResponseEntity<HackathonStaffAssignment> assignMentor(@PathVariable Long id,
+    @Valid @RequestBody AssignMentorRequest request) {
+    HackathonStaffAssignment assignment = hackathonService.assignMentorToHackathon( id, request.getOrganizerStaffId(),
+    request.getMentorStaffId());
+    return ResponseEntity.ok(assignment);
     }
 
     @PostMapping("/{id}/proclaim-winner")
@@ -81,5 +96,13 @@ public class HackathonController {
          * che sta creando l'hackathon.
          */
         private Long organizerStaffId;
+
+    }
+
+    @Data
+    public static class AssignMentorRequest {
+        private Long organizerStaffId;
+        private Long mentorStaffId;
+    
     }
 }
