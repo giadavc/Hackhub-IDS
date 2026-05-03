@@ -31,4 +31,27 @@ public class StaffController {
          */
         private String role;
     }
+
+    // Endpoint per cambiare lo stato di un hackathon (esempio illustrativo per invio sottomissioni di un team)
+    @PutMapping("/hackathon/{hackathonId}/status")
+    public ResponseEntity<org.example.hackhubids.Domain.Hackathon> changeHackathonStatus(
+            @PathVariable Long hackathonId,
+            @Valid @RequestBody ChangeStatusRequest request) {
+        
+        org.example.hackhubids.Domain.HackathonStatus newStatus = 
+                org.example.hackhubids.Domain.HackathonStatus.valueOf(request.getNewStatus());
+        
+        org.example.hackhubids.Domain.Hackathon updatedHackathon = 
+                staffService.changeHackathonStatus(hackathonId, request.getOrganizerId(), newStatus);
+        
+        return ResponseEntity.ok(updatedHackathon);
+    }
+    @Data
+    public static class ChangeStatusRequest {
+        private Long organizerId;
+        /**
+         * Stato: IN_REGISTRATION, RUNNING, IN_EVALUATION, FINISHED
+         */
+        private String newStatus;
+    }
 }
