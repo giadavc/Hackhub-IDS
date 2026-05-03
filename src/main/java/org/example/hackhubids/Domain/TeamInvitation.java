@@ -1,18 +1,19 @@
 package org.example.hackhubids.Domain;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class TeamInvitation {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,5 +35,8 @@ public class TeamInvitation {
     private LocalDateTime createdAt;
 
     private LocalDateTime respondedAt;
-    
+
+    public static TeamInvitationBuilder builder() {
+        return new TeamInvitationBuilder();
+    }
 }

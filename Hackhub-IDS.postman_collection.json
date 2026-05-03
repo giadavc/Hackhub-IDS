@@ -77,6 +77,22 @@
             "url": "{{baseUrl}}/staff/assign-role",
             "description": "Assigns ORGANIZER, JUDGE, or MENTOR to a user."
           }
+        },
+        {
+          "name": "Change hackathon status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizerId\": {{organizerStaffId}},\n  \"newStatus\": \"RUNNING\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/staff/hackathon/{{hackathonId}}/status",
+            "description": "Changes the status of a hackathon."
+          }
         }
       ]
     },
@@ -344,3 +360,4 @@
     }
   ]
 }
+

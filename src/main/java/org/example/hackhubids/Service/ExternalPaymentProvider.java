@@ -8,11 +8,10 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class ExternalPaymentProvider implements PaymentProvider {
+public class ExternalPaymentProvider {
 
-    private static final double SUCCESS_RATE = 0.90;   // 90% successi
+    private static final double SUCCESS_RATE = 0.90;
 
-    @Override
     public PaymentResult pay(Long teamId, Double amount) {
         validateInput(teamId, amount);
 
@@ -30,6 +29,7 @@ public class ExternalPaymentProvider implements PaymentProvider {
             throw new IllegalArgumentException("amount non valido");
         }
     }
+
     private String generateTransactionId(Long teamId) {
         String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         String shortUuid = UUID.randomUUID().toString().substring(0, 8).toUpperCase();

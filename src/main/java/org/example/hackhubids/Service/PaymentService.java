@@ -19,7 +19,7 @@ public class PaymentService {
     private final HackathonRepository hackathonRepository;
     private final TeamRepository teamRepository;
     private final PaymentRepository paymentRepository;
-    private final PaymentProvider paymentProvider;
+    private final ExternalPaymentProvider externalPaymentProvider;
 
     @Transactional
     public Payment payWinner(Long hackathonId){
@@ -28,13 +28,13 @@ public class PaymentService {
         Team team = teamRepository.findById(hackathon.getWinnerTeamId())
                 .orElseThrow();
         
-        PaymentResult paymentResult = paymentProvider.pay(team.getId(), hackathon.getPrizeAmount());
+        PaymentResult paymentResult = externalPaymentProvider.pay(team.getId(), hackathon.getPrizeAmount());
 
         Payment payment = Payment.builder()
                 .hackathon(hackathon)
                 .team(team)
                 .amount(hackathon.getPrizeAmount())
-                .status(paymentResult.isSuccess() ? "PAD" : "FAILED")
+                .status(paymentResult.isSuccess() ? "PAID" : "FAILED")
                 .externalTransactionId(paymentResult.getExternalTransactionId())
                 .paidAt(paymentResult.isSuccess() ? LocalDateTime.now() : null)
                 .build();

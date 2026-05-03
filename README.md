@@ -24,39 +24,48 @@ src/main/java/org/example/hackhubids/
 ├── Domain/           # Entità JPA e Enum
 ```
 
+
 ## Design Pattern Utilizzati
 
-
 ### 1. **Adapter Pattern (Hexagonal Architecture)**
-Interfacce per servizi esterni, implementate con mock:
+Interfaccia per integrare un servizio esterno senza legare la logica di business a un’implementazione concreta.
 
-- **CalendarPort** → **CalendarClient**: Gestione calendar esterni (simulato in-memory)
-  ```java
-  public interface CalendarPort {
-      String createCallSlot(Long teamId, Long mentorId, String timeSlot);
-  }
-  ```
-  
+- **CalendarPort** → astrazione del servizio calendar
+- **CalendarClient** → adapter concreto che simula il calendar in-memory
 
-- **PaymentProvider** → **ExternalPaymentProvider**: Pagamenti winner (simulato con 90% success rate)
-  ```java
-  public interface PaymentProvider {
-      PaymentResult pay(Long teamId, Double amount);
-  }
-  ```
+Uso nel progetto:
+- [MentoringService](src/main/java/org/example/hackhubids/Service/MentoringService.java) usa `CalendarPort`
+- [CalendarClient](src/main/java/org/example/hackhubids/Service/CalendarClient.java) implementa l’adapter
+
+Vantaggi:
+- disaccoppia il dominio dal servizio esterno
+- rende il codice più testabile
+- permette di sostituire facilmente il calendar simulato con uno reale
 
 
-### 5. **Builder Pattern**
-```java
-// Domain/Hackathon.java
-@Builder
-public class Hackathon {
-    private Long id;
-    private String name;
-    // ... campi
-}
-```
-Usato via Lombok su tutte le entità Domain per creazione fluente.
+### 2. **Factory Pattern**
+Centralizzazione della creazione di oggetti con una logica di costruzione specifica.
+
+- **StaffMemberFactory** → crea gli oggetti StaffMember in base al ruolo
+
+Uso nel progetto:
+- [StaffService](src/main/java/org/example/hackhubids/Service/StaffService.java) delega la creazione a `StaffMemberFactory`
+
+Vantaggi:
+- evita duplicazione di logica di creazione
+- rende più pulita la gestione dei ruoli
+- facilita future estensioni nella costruzione dello staff
+
+### 3. **Builder Pattern**
+Usato sulle entità del dominio per costruire oggetti in modo leggibile e fluente.
+
+Esempio:
+- [Hackathon](src/main/java/org/example/hackhubids/Domain/Hackathon.java)
+- [Payment](src/main/java/org/example/hackhubids/Domain/Payment.java)
+- [CallProposal](src/main/java/org/example/hackhubids/Domain/CallProposal.java)
+
+È implementato tramite Lombok con annotazione Builder.
+
 
 
 
