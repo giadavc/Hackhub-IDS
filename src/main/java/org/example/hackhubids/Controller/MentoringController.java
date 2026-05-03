@@ -8,6 +8,7 @@ import org.example.hackhubids.Domain.SupportRequest;
 import org.example.hackhubids.Domain.Team;
 import org.example.hackhubids.Repository.HackathonRepository;
 import org.example.hackhubids.Repository.TeamRepository;
+import org.example.hackhubids.Service.MentoringService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

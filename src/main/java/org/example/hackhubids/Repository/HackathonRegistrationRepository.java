@@ -1,6 +1,7 @@
 package org.example.hackhubids.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.example.hackhubids.Domain.Hackathon;
 import org.example.hackhubids.Domain.HackathonRegistration;
@@ -13,4 +14,6 @@ public interface HackathonRegistrationRepository extends JpaRepository<Hackathon
     boolean existsByTeamAndHackathon_StatusIn(Team team, Collection<HackathonStatus> statuses);
 
     long countByHackathon(Hackathon hackathon);
+
+    Optional<HackathonRegistration> findByHackathonAndTeam(Hackathon hackathon, Team team);
 }
