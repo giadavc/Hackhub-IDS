@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SupportRequestRepository extends JpaRepository<SupportRequest, Long> {
     
-    List<SupportRequest> findByMentor(StaffMember mentor);
+    List<SupportRequest> findByHackathon(Long hackathonId);
     
 }

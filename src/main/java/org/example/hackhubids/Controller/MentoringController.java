@@ -45,9 +45,9 @@ public class MentoringController {
         return ResponseEntity.ok(mentoringService.createSupportRequest(entity));
     }
 
-    @GetMapping("/support-requests/{mentorId}")
-    public ResponseEntity<List<SupportRequest>> listSupportRequests(@PathVariable Long mentorId) {
-        return ResponseEntity.ok(mentoringService.listSupportRequestsForMentor(mentorId));
+    @GetMapping("/support-requests/{hackathonId}")
+    public ResponseEntity<List<SupportRequest>> listSupportRequests(@PathVariable Long hackathonId) {
+        return ResponseEntity.ok(mentoringService.listSupportRequestsForHackathon(hackathonId));
     }
 
     @PostMapping("/support-requests/{id}/propose-call")

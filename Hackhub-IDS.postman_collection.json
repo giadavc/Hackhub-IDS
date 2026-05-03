@@ -1,0 +1,346 @@
+{
+  "info": {
+    "_postman_id": "7d0f61d4-72d7-4f35-bf5d-6f7c6d9d8e01",
+    "name": "Hackhub IDS API",
+    "description": "Postman collection generated from the Spring Boot controllers in the Hackhub-IDS project.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "userId", "value": "1" },
+    { "key": "teamId", "value": "1" },
+    { "key": "invitationId", "value": "1" },
+    { "key": "hackathonId", "value": "1" },
+    { "key": "submissionId", "value": "1" },
+    { "key": "evaluationId", "value": "1" },
+    { "key": "reportId", "value": "1" },
+    { "key": "supportRequestId", "value": "1" },
+    { "key": "staffMemberId", "value": "1" },
+    { "key": "organizerStaffId", "value": "1" },
+    { "key": "mentorStaffId", "value": "2" },
+    { "key": "judgeId", "value": "3" },
+    { "key": "mentorId", "value": "2" }
+  ],
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Rossi\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/users/register",
+            "description": "Creates a new user."
+          }
+        },
+        {
+          "name": "Login user",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/users/login",
+            "description": "Logs in an existing user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        {
+          "name": "Assign role",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{userId}},\n  \"role\": \"MENTOR\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/staff/assign-role",
+            "description": "Assigns ORGANIZER, JUDGE, or MENTOR to a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Create team",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alpha Team\",\n  \"userId\": {{userId}}\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/teams",
+            "description": "Creates a team and links the owner user."
+          }
+        },
+        {
+          "name": "Invite user",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inviterUserId\": {{userId}},\n  \"invitedUserId\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/teams/{{teamId}}/invite",
+            "description": "Sends an invitation to a user."
+          }
+        },
+        {
+          "name": "Accept invitation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invitedUserId\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/teams/invitations/{{invitationId}}/accept",
+            "description": "Accepts a pending team invitation."
+          }
+        },
+        {
+          "name": "Reject invitation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invitedUserId\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/teams/invitations/{{invitationId}}/reject",
+            "description": "Rejects a pending team invitation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hackathons",
+      "item": [
+        {
+          "name": "List public hackathons",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/hackathons",
+            "description": "Returns the list of public hackathons."
+          }
+        },
+        {
+          "name": "List submissions for hackathon",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/hackathons/{{hackathonId}}/submissions?staffMemberId={{staffMemberId}}",
+            "description": "Returns submissions visible to the given staff member."
+          }
+        },
+        {
+          "name": "Create hackathon",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hackhub Spring Challenge\",\n  \"rules\": \"Build a working prototype and submit a demo link.\",\n  \"registrationDeadline\": \"2026-05-20\",\n  \"startDate\": \"2026-06-01\",\n  \"endDate\": \"2026-06-03\",\n  \"location\": \"Milan\",\n  \"prizeAmount\": 1500.0,\n  \"maxTeamSize\": 5,\n  \"maxTeams\": 20,\n  \"organizerStaffId\": {{organizerStaffId}}\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/hackathons",
+            "description": "Creates a new hackathon."
+          }
+        },
+        {
+          "name": "Assign mentor",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizerStaffId\": {{organizerStaffId}},\n  \"mentorStaffId\": {{mentorStaffId}}\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/hackathons/{{hackathonId}}/assign-mentor",
+            "description": "Assigns a mentor to a hackathon."
+          }
+        },
+        {
+          "name": "Proclaim winner and pay",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/hackathons/{{hackathonId}}/proclaim-winner?teamId={{teamId}}",
+            "description": "Marks the winner team and triggers payment."
+          }
+        },
+        {
+          "name": "Register team",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/hackathons/{{hackathonId}}/register-team?teamId={{teamId}}",
+            "description": "Registers a team for the hackathon."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submissions",
+      "item": [
+        {
+          "name": "Create submission",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hackathonId\": {{hackathonId}},\n  \"teamId\": {{teamId}},\n  \"contentUrl\": \"https://example.com/demo.zip\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/submissions",
+            "description": "Creates a submission for a team and hackathon."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Evaluations",
+      "item": [
+        {
+          "name": "Evaluate submission",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionId\": {{submissionId}},\n  \"judgeId\": {{judgeId}},\n  \"score\": 85,\n  \"comment\": \"Solid solution with clear implementation.\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/evaluations",
+            "description": "Stores a judge evaluation for a submission."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mentoring",
+      "item": [
+        {
+          "name": "Create support request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hackathonId\": {{hackathonId}},\n  \"teamId\": {{teamId}},\n  \"message\": \"We need help with deployment and CI configuration.\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/mentoring/support-requests",
+            "description": "Creates a mentoring support request."
+          }
+        },
+        {
+          "name": "List support requests for mentor",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/mentoring/support-requests/{{mentorId}}",
+            "description": "Lists all support requests assigned to a mentor."
+          }
+        },
+        {
+          "name": "Propose call",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mentorId\": {{mentorId}},\n  \"timeSlot\": \"2026-06-02T15:00:00\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/mentoring/support-requests/{{supportRequestId}}/propose-call",
+            "description": "Creates a call proposal for a support request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Violations",
+      "item": [
+        {
+          "name": "Report violation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hackathonId\": {{hackathonId}},\n  \"teamId\": {{teamId}},\n  \"mentorId\": {{mentorId}},\n  \"description\": \"Team shared external resources not allowed by the rules.\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/violations",
+            "description": "Reports a violation observed during a hackathon."
+          }
+        },
+        {
+          "name": "Resolve violation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizerId\": {{organizerStaffId}},\n  \"decision\": \"DISMISS\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/violations/{{reportId}}/resolve",
+            "description": "Resolves a violation report with REMOVE_TEAM or DISMISS."
+          }
+        }
+      ]
+    }
+  ]
+}

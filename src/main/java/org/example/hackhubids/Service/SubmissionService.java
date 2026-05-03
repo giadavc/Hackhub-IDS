@@ -44,11 +44,9 @@ public class SubmissionService {
 
     private void validateSubmissionWindow(Hackathon hackathon) {
         LocalDate now = LocalDate.now();
-        if (hackathon.getStatus() == HackathonStatus.FINISHED
-                || hackathon.getStatus() == HackathonStatus.IN_EVALUATION
-                || (hackathon.getEndDate() != null && now.isAfter(hackathon.getEndDate()))) {
+        if (hackathon.getStatus() != HackathonStatus.RUNNING
+            || (hackathon.getEndDate() != null && now.isAfter(hackathon.getEndDate()))) {
             throw new IllegalStateException("Submission deadline has passed");
         }
     }
-    
 }

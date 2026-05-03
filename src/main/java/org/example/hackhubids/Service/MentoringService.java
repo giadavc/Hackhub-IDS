@@ -34,9 +34,8 @@ public class MentoringService {
     }
 
     @Transactional(readOnly = true)
-    public List<SupportRequest> listSupportRequestsForMentor(Long mentorId) {
-        StaffMember mentor = staffMemberRepository.findById(mentorId).orElseThrow();
-        return supportRequestRepository.findByMentor(mentor);
+    public List<SupportRequest> listSupportRequestsForHackathon(Long hackathonId) {
+        return supportRequestRepository.findByHackathon(hackathonId);
     }
 
     @Transactional
